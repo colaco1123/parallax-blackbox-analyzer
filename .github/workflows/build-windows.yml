@@ -1,0 +1,71 @@
+name: Build Windows exe
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up MSYS2 (MinGW toolchain for blackbox_decode)
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          install: make mingw-w64-ucrt-x86_64-gcc
+
+      - name: Build blackbox_decode.exe
+        shell: msys2 {0}
+        run: |
+          make obj/blackbox_decode LDFLAGS="-static -pthread -lm"
+          ls -la obj/
+          ./obj/blackbox_decode.exe --version
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: analyzer/requirements-build.txt
+
+      - name: Install Python dependencies
+        run: pip install -r analyzer/requirements-build.txt
+
+      - name: Run tests
+        run: python -m pytest -q analyzer/tests
+        env:
+          BLACKBOX_DECODE: ${{ github.workspace }}\obj\blackbox_decode.exe
+
+      - name: Build exe with PyInstaller
+        run: pyinstaller --noconfirm --clean --distpath dist --workpath build analyzer/ParallaxBlackboxAnalyzer.spec
+
+      - name: Smoke test exe starts
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath dist\ParallaxBlackboxAnalyzer.exe -PassThru
+          Start-Sleep -Seconds 20
+          if ($p.HasExited) { throw "exe exited early with code $($p.ExitCode)" }
+          Stop-Process -Id $p.Id -Force
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ParallaxBlackboxAnalyzer-windows
+          path: |
+            dist/ParallaxBlackboxAnalyzer.exe
+            obj/blackbox_decode.exe
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/ParallaxBlackboxAnalyzer.exe
+            obj/blackbox_decode.exe
+          generate_release_notes: true

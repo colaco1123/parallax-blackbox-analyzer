@@ -67,8 +67,8 @@ LDFLAGS += -flto # required for clang LTO linking
 endif
 
 BLACKBOX_COMMIT := unknown
-ifeq ($(shell git diff --shortstat),)
-BLACKBOX_COMMIT := $(shell git log -1 --format="%h")
+ifeq ($(shell git diff --shortstat 2>/dev/null),)
+BLACKBOX_COMMIT := $(shell git log -1 --format="%h" 2>/dev/null)
 endif
 
 # Setting ARCH_FLAGS=-m32 permits building on Linux x86_64 for ia32 ..

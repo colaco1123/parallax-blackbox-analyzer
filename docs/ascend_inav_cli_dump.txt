@@ -1,0 +1,168 @@
+Entering CLI Mode, type 'exit' to return, or 'help'
+
+# diff
+
+# version
+# INAV/FLYWOOF722PRO 9.0.1 Feb 13 2026 / 06:50:48 (d44f2cf6) 
+# GCC-13.2.1 20231009
+
+# start the command batch
+batch start
+
+# resources
+
+# Timer overrides
+
+# Outputs [servo]
+
+# safehome
+
+# Fixed Wing Approach
+
+# features
+feature SOFTSERIAL
+feature PWM_OUTPUT_ENABLE
+
+# beeper
+
+# blackbox
+blackbox NAV_ACC
+blackbox NAV_POS
+blackbox NAV_PID
+blackbox MAG
+blackbox ACC
+blackbox ATTI
+blackbox RC_DATA
+blackbox RC_COMMAND
+blackbox MOTORS
+blackbox GYRO_RAW
+blackbox PEAKS_R
+blackbox PEAKS_P
+blackbox PEAKS_Y
+blackbox SERVOS
+
+# Receiver: Channel map
+
+# Ports
+serial 0 0 115200 115200 0 115200
+serial 2 64 115200 115200 0 115200
+serial 4 65536 115200 19200 0 115200
+serial 5 16384 115200 19200 0 115200
+
+# LEDs
+
+# LED color
+
+# LED mode_color
+
+# Modes [aux]
+aux 0 0 0 1650 2050
+aux 1 1 1 1700 2100
+aux 2 11 1 1700 2100
+aux 3 5 1 1700 2100
+aux 4 33 1 1700 2100
+
+# Adjustments [adjrange]
+
+# Receiver rxrange
+
+# temp_sensor
+
+# Mission Control Waypoints [wp]
+#wp 0 invalid
+
+# OSD [osd_layout]
+
+# Programming: logic
+
+# Programming: global variables
+
+# Programming: PID controllers
+
+# OSD: custom elements
+
+# master
+set gyro_main_lpf_hz = 90
+set dynamic_gyro_notch_q = 250
+set dynamic_gyro_notch_min_hz = 60
+set dynamic_gyro_notch_mode = 3D
+set setpoint_kalman_q = 200
+set gyro_zero_x = -23
+set gyro_zero_z = 6
+set ins_gravity_cmss =  984.488
+set acc_hardware = ICM42605
+set acczero_x = -15
+set acczero_y = 35
+set acczero_z = 38
+set accgain_x = 4104
+set accgain_y = 4181
+set accgain_z = 4105
+set rangefinder_hardware = BENEWAKE
+set rangefinder_median_filter = ON
+set opflow_hardware = CXOF
+set opflow_scale =  9.887
+set align_mag = CW270FLIP
+set mag_hardware = NONE
+set baro_hardware = SPL06
+set rssi_channel = 17
+set serialrx_provider = CRSF
+set blackbox_rate_denom = 2
+set motor_pwm_protocol = DSHOT600
+set failsafe_procedure = DROP
+set align_board_pitch = -2
+set small_angle = 40
+set applied_defaults = 5
+set airmode_type = THROTTLE_THRESHOLD
+set inav_allow_dead_reckoning = ON
+set inav_max_surface_altitude = 430
+set inav_w_z_surface_p =  3.000
+set inav_w_z_surface_v =  4.000
+set inav_w_z_baro_p =  0.010
+set inav_default_alt_sensor = BARO
+set nav_mc_althold_throttle = MID_STICK
+set nav_max_terrain_follow_alt = 430
+set nav_mc_manual_climb_rate = 75
+set debug_mode = FLOW_RAW
+
+# control_profile
+control_profile 3
+
+set nav_mc_vel_z_p = 70
+set nav_mc_vel_z_i = 30
+set mc_iterm_relax = RPY
+set d_boost_min =  0.800
+set d_boost_max =  1.200
+set antigravity_gain =  2.000
+set antigravity_accelerator =  5.000
+set tpa_rate = 20
+set tpa_breakpoint = 1200
+set manual_rc_expo = 40
+set manual_roll_rate = 98
+set manual_pitch_rate = 95
+
+# mixer_profile
+mixer_profile 1
+
+set model_preview_type = 3
+set motorstop_on_low = OFF
+
+# Mixer: motor mixer
+
+mmix reset
+
+mmix 0  1.000 -1.000  1.000 -1.000
+mmix 1  1.000 -1.000 -1.000  1.000
+mmix 2  1.000  1.000  1.000  1.000
+mmix 3  1.000  1.000 -1.000 -1.000
+
+# Mixer: servo mixer
+
+# battery_profile
+battery_profile 1
+
+
+# save configuration
+save
+
+# end the command batch
+batch end
