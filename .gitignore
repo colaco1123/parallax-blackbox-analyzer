@@ -10,8 +10,8 @@ __pycache__/
 .pytest_cache/
 /decoded_temp/
 /log_*/
-*.TXT
-*.BBL
-*.BFL
-*.exe
+/*.TXT
+/*.BBL
+/*.BFL
+/*.exe
 !/docs/**
